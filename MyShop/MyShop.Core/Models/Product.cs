@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MyShop.Core.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
         //[StringLength(20)]//Defines the possible length of the display name
         [DisplayName("Product Name")]//Defines the name to be displayed when a product is added
@@ -22,10 +22,10 @@ namespace MyShop.Core.Models
         public string Category { get; set; }
         public string Image { get; set; }
 
-        //Creates a product and assigns and new GUID to it
-        public Product()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        ////Creates a product and assigns and new GUID to it
+        //public Product()
+        //{
+        //    this.Id = Guid.NewGuid().ToString();
+        //}
     }
 }
