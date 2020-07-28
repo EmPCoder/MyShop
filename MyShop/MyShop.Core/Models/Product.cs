@@ -12,7 +12,7 @@ namespace MyShop.Core.Models
     {
         public string Id { get; set; }
 
-        [StringLength(20)]//Defines the possible length of the display name
+        //[StringLength(20)]//Defines the possible length of the display name
         [DisplayName("Product Name")]//Defines the name to be displayed when a product is added
         public string Name { get; set; }
         public string Description { get; set; }
