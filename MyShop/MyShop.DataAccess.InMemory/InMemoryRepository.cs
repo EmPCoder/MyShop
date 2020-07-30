@@ -1,4 +1,5 @@
-﻿using MyShop.Core.Models;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity//shows that class will use generics, inside <> doesnt matter can be x,k,i etc...
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity//shows that class will use generics, inside <> doesnt matter can be x,k,i etc...
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;//Generic List of objects
