@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using MyShop.Core.Contracts;
 using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
@@ -44,7 +46,7 @@ namespace MyShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(Product product, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)//Checks to make sure validation is correct.
             {
@@ -52,6 +54,12 @@ namespace MyShop.WebUI.Controllers
             }
             else
             {
+                if (file != null)
+                {
+                    product.Image = product.Id + Path.GetExtension(file.FileName);//Assigns the image a product Id 
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//") + product.Image);//Saves images to the specified path
+                }
+
                 context.Insert(product);
                 context.Commit();
 
@@ -77,13 +85,14 @@ namespace MyShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product, string Id)//Edits Product
+        public ActionResult Edit(Product product, string Id, HttpPostedFileBase file)//Edits Product
         {
             Product productToEdit = context.Find(Id);
             if (product == null)
             {
                 return HttpNotFound();
             }
+
             else
             {
                 if (!ModelState.IsValid)
@@ -91,9 +100,14 @@ namespace MyShop.WebUI.Controllers
                     return View(product);
                 }
 
+                if (file != null)
+                {
+                    productToEdit.Image = product.Id + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//") + productToEdit.Image);
+                }
+
                 productToEdit.Category = product.Category;//Defines what field to edit within the product in this case Category
                 productToEdit.Description = product.Description;
-                productToEdit.Image = product.Image;
                 productToEdit.Name = product.Name;
                 productToEdit.Price = product.Price;
 
