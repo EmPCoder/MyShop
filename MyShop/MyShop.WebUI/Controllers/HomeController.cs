@@ -1,5 +1,6 @@
 ﻿using MyShop.Core.Contracts;
 using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,25 @@ namespace MyShop.WebUI.Controllers
             //productCategories = new InMemoryRepository<ProductCategory>();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string Category=null)
         {
             List<Product> products = context.Collection().ToList();//Creates a list of products
-            return View(products);//Sends the above created list to the known view
+            List<ProductCategory> categories = productCategories.Collection().ToList();
+
+            if(Category == null)
+            {
+                products = context.Collection().ToList();
+            }
+            else
+            {
+                products = context.Collection().Where(p => p.Category == Category).ToList();
+            }
+
+            ProductListViewModel model = new ProductListViewModel();
+            model.Products = products;
+            model.ProductCategories = categories;
+
+            return View(model);//Updates the view to return the created ProductListViewModel instead of previous
         }
 
         public ActionResult Details(string Id)
