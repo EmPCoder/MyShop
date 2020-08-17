@@ -2,11 +2,8 @@
 using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace MyShop.Services

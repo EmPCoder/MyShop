@@ -3,29 +3,23 @@ using MyShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 
-namespace MyShop.DataAccess.InMemory
+namespace MyShop.WebUI.Tests.Mocks
 {
-    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity//shows that class will use generics, inside <> doesnt matter can be x,k,i etc...
+    public class MockContext<T> : IRepository<T> where T: BaseEntity
     {
-        ObjectCache cache = MemoryCache.Default;
         List<T> items;//Generic List of objects
         string className;
 
-        public InMemoryRepository()
+        public MockContext()
         {
-            className = typeof(T).Name;
-            items = cache[className] as List<T>;
-            if (items == null)
-            {
-                items = new List<T>();
-            }
+            
+           items = new List<T>();
         }
 
         public void Commit()
         {
-            cache[className] = items;
+            return;
         }
 
         public void Insert(T t)
